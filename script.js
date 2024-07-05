@@ -1,9 +1,19 @@
 document.addEventListener('DOMContentLoaded', function() {
     fetch('data.csv')
-        .then(response => response.text())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
         .then(data => {
+            console.log('CSV Data:', data); // Debugging: Log the fetched CSV data
             const titles = parseCSV(data);
+            console.log('Parsed Titles:', titles); // Debugging: Log the parsed titles
             populateTitles(titles);
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
         });
 });
 
@@ -14,7 +24,7 @@ function parseCSV(data) {
         const values = line.split(',');
         let title = {};
         headers.forEach((header, index) => {
-            title[header.trim()] = values[index].trim();
+            title[header.trim()] = values[index]?.trim();
         });
         return title;
     });
@@ -24,10 +34,12 @@ function parseCSV(data) {
 function populateTitles(titles) {
     const titleSelect = document.getElementById('title');
     titles.forEach(title => {
-        const option = document.createElement('option');
-        option.value = title.Title;
-        option.textContent = title.Title;
-        titleSelect.appendChild(option);
+        if (title.Title) { // Ensure there is a valid title to add
+            const option = document.createElement('option');
+            option.value = title.Title;
+            option.textContent = title.Title;
+            titleSelect.appendChild(option);
+        }
     });
 
     titleSelect.addEventListener('change', function() {
