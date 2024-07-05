@@ -1,0 +1,172 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0 10px; /* Ensure some padding for smaller screens */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+.calculator {
+    border: 2px solid orange;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 700px; /* Ensure it fits within viewport */
+    max-height: 100vh; /* Ensure it fits within viewport height */
+    overflow: auto; /* Allow scrolling if necessary */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box; /* Ensure padding is included in the element's width */
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header img {
+    width: auto;
+    height: 100px; /* Adjust size as needed */
+    background-color: orange;
+    object-fit: contain; /* Ensure it fits within the given size */
+}
+
+h1 {
+    font-size: 1.5em;
+    margin: 10px 0;
+    color: black;
+}
+
+.form-group {
+    margin: 5px 0; /* Reduced margin */
+    width: 100%; /* Ensure form groups take full width */
+}
+
+.form-group.buttons {
+    display: flex;
+    justify-content: center; /* Center buttons */
+    margin-top: 10px; /* Adjust to align with other elements */
+}
+
+.form-group.buttons button {
+    font-size: 16px;
+    padding: 10px 20px;
+    margin: 5px;
+    flex: 1; /* Allow buttons to grow and shrink */
+    max-width: 150px; /* Limit max width */
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 12pt;
+}
+
+input, select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    font-size: 12pt;
+}
+
+table {
+    width: 100%;
+    margin-top: 10px;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 5px; /* Adjust padding for smaller size */
+    text-align: center;
+    font-size: 10pt;
+    font-weight: normal;
+    white-space: nowrap;
+}
+
+thead th {
+    background-color: #e6f2ff; /* Light blue for headers */
+}
+
+tbody td:nth-child(1), /* Salary Schedule */
+tbody td:nth-child(2), /* Min */
+tbody td:nth-child(3), /* Mid */
+tbody td:nth-child(4)  /* Advertised Max */
+{
+    background-color: #e6f2ff; /* Light blue */
+}
+
+tbody td:nth-child(5), /* Bottom */
+tbody td:nth-child(6)  /* Top */
+{
+    background-color: #f0f0f0; /* Light grey */
+}
+
+th[colspan="2"].exceptional-performance {
+    background-color: #f0f0f0;
+    white-space: normal;
+}
+
+th.grey-header {
+    background-color: #f0f0f0;
+}
+
+#results {
+    background-color: orange;
+    color: white;
+    padding: 10px; /* Adjust padding */
+    border-radius: 10px;
+    text-align: left;
+    margin-top: 10px; /* Adjust margin */
+}
+
+.results-content {
+    font-size: 12pt;
+}
+
+.results-content p {
+    margin: 5px 0; /* Adjust margin */
+}
+
+.results-content p span {
+    display: block;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.results-content p:nth-child(3) span {
+    font-size: 18pt;
+}
+
+.merit-message {
+    background-color: #f0f0f0;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    font-size: 10pt;
+}
+
+.disclaimer {
+    margin-top: 10px;
+    font-size: 12px;
+    text-align: center;
+    color: #555;
+}
+
+.logo-footer-wrapper {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.logo-footer {
+    width: 50px; /* Adjust size as needed */
+    height: auto;
+}
