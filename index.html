@@ -5,138 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manager Merit Calculator</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .calculator {
-            border: 1px solid orange;
-            border-radius: 10px;
-            padding: 20px;
-            background-color: white;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 600px;
-            max-width: 100%;
-        }
-        .calculator img {
-            width: 50px;
-            height: auto;
-        }
-        .calculator-title {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .calculator-title img {
-            margin-right: 10px;
-        }
-        .calculator-title h1 {
-            margin: 0;
-            color: black;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .form-group input,
-        .form-group select {
-            width: calc(100% - 12px);
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 8px;
-            text-align: left;
-            font-size: 10pt;
-            background-color: white;
-        }
-        th {
-            background-color: lightblue;
-        }
-        th[colspan="2"] {
-            text-align: center;
-        }
-        td {
-            background-color: white;
-        }
-        td#bottom, td#top {
-            background-color: lightgrey;
-        }
-        .buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        .buttons button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            background-color: orange;
-            color: white;
-            font-size: 14px;
-            cursor: pointer;
-        }
-        .buttons button:hover {
-            background-color: darkorange;
-        }
-        .orange-box {
-            background-color: orange;
-            color: white;
-            padding: 10px;
-            border-radius: 10px;
-            margin-top: 20px;
-            text-align: left;
-            font-size: 12pt;
-            padding-left: 30px;
-            padding-right: 30px;
-        }
-        .orange-box .result {
-            font-weight: bold;
-        }
-        .orange-box .result.big {
-            font-size: 18pt;
-        }
-        .disclaimer {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 10pt;
-        }
-        .grey-box {
-            background-color: lightgrey;
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 0px;
-            font-size: 10pt;
-        }
-    </style>
 </head>
 <body>
     <div class="calculator">
-        <div class="calculator-title">
-            <img src="logo.png" alt="Logo">
+        <div class="header">
+            <img src="logo.png" alt="Logo" class="logo">
             <h1>Manager Merit Calculator</h1>
         </div>
         <div class="form-group">
             <label for="title">Select Title</label>
             <select id="title">
-                <option>Select One</option>
+                <option value="">Select One</option>
             </select>
         </div>
         <div class="form-group">
@@ -146,44 +25,60 @@
         <div class="form-group">
             <label for="meritRating">Merit Rating</label>
             <select id="meritRating">
-                <option>Select One</option>
-                <option>Needs Improvement</option>
-                <option>Meets Performance Objectives</option>
-                <option>Exceeds Performance Objectives</option>
-                <option>Demonstrates Exceptional Performance</option>
+                <option value="">Select One</option>
+                <option value="Needs Improvement">Needs Improvement</option>
+                <option value="Meets Performance Objectives">Meets Performance Objectives</option>
+                <option value="Exceeds Performance Objectives">Exceeds Performance Objectives</option>
+                <option value="Demonstrates Exceptional Performance">Demonstrates Exceptional Performance</option>
             </select>
         </div>
-        <div class="grey-box" id="meritMessage"></div>
-        <div class="buttons">
+        <div class="merit-message" id="meritMessage"></div>
+        <div class="form-group buttons">
             <button onclick="calculate()">Calculate</button>
             <button onclick="clearForm()">Clear Form</button>
         </div>
         <table>
-            <tr>
-                <th>Salary Schedule</th>
-                <th>Min</th>
-                <th>Mid</th>
-                <th>Advertised<br>Max</th>
-                <th colspan="2">Reserved for<br>Exceptional Performance</th>
-            </tr>
-            <tr>
-                <td id="schedule"></td>
-                <td id="min"></td>
-                <td id="mid"></td>
-                <td id="max"></td>
-                <td id="bottom"></td>
-                <td id="top"></td>
-            </tr>
+            <thead>
+                <tr>
+                    <th>Salary Schedule</th>
+                    <th>Min</th>
+                    <th>Mid</th>
+                    <th>Advertised Max</th>
+                    <th colspan="2" class="exceptional-performance">Reserved for Exceptional Performance</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th class="grey-header">Bottom</th>
+                    <th class="grey-header">Top</th>
+                </tr>
+            </thead>
+            <tbody id="salaryTable">
+                <tr>
+                    <td id="schedule"></td>
+                    <td id="min"></td>
+                    <td id="mid"></td>
+                    <td id="max"></td>
+                    <td id="bottom"></td>
+                    <td id="top"></td>
+                </tr>
+            </tbody>
         </table>
-        <div class="orange-box">
-            <div>Updated Salary Information:</div>
-            <div id="newRateLabel">Hourly Rate after Negotiated Increase is Applied:<span class="result">---</span></div>
-            <div id="meritIncreaseLabel">Merit Percentage Increase:<span class="result">---</span></div>
-            <div id="estimatedRateLabel">Estimated Hourly Rate (effective 6/28/24):<span class="result big">---</span></div>
+        <div id="results">
+            <p><strong>Updated Salary Information:</strong></p>
+            <div class="results-content">
+                <p>Hourly Rate after Negotiated Increase is Applied: <span id="newRate"><b>---</b></span></p>
+                <p>Merit Percentage Increase: <span id="meritIncrease"><b>---</b></span></p>
+                <p>Estimated Hourly Rate (effective 6/28/24): <span id="estimatedRate"><b>---</b></span></p>
+            </div>
         </div>
         <div class="disclaimer">
             <p><strong>Disclaimer:</strong> These calculations are not official and should be used as estimates only. You will receive a memo from Human Resources Services with your approved new hourly rate following completion of your evaluation.</p>
-            <img src="logo2.png" alt="Logo 2">
+        </div>
+        <div class="logo-footer-wrapper">
+            <img src="logo2.png" alt="Footer Logo" class="logo-footer">
         </div>
     </div>
     <script src="script.js"></script>
