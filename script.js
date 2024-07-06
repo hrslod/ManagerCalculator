@@ -15,6 +15,11 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => {
             console.error('There has been a problem with your fetch operation:', error);
         });
+
+    document.getElementById('meritRating').addEventListener('change', function() {
+        const meritRating = this.value;
+        updateMeritMessage(meritRating);
+    });
 });
 
 function parseCSV(data) {
@@ -55,6 +60,27 @@ function populateTitles(titles) {
     });
 }
 
+function updateMeritMessage(meritRating) {
+    let message = '';
+    switch (meritRating) {
+        case 'Needs Improvement':
+            message = 'Evaluations with an overall rating of “Needs Improvement” are not eligible for performance-based merit increase.';
+            break;
+        case 'Meets Performance Objectives':
+            message = 'Evaluations with an overall rating of “Meets Performance Objectives” will earn a 3% increase, not to exceed the advertised maximum of the salary range for the classification.';
+            break;
+        case 'Exceeds Performance Objectives':
+            message = 'Evaluations with an overall rating of “Exceeds Performance Objectives” will earn a 6% increase, not to exceed the advertised maximum of the salary range for the classification.';
+            break;
+        case 'Demonstrates Exceptional Performance':
+            message = 'Evaluations with an overall rating of “Demonstrates Exceptional Performance” will earn a 9% increase, not to exceed the Exceptional Performance maximum of the salary range for the classificaiton.';
+            break;
+        default:
+            message = '';
+    }
+    document.getElementById('meritMessage').textContent = message;
+}
+
 function calculate() {
     const currentRate = parseFloat(document.getElementById('currentHourlyRate').value.replace('$', ''));
     const meritRating = document.getElementById('meritRating').value;
@@ -83,16 +109,13 @@ function calculate() {
     let estimatedRate;
 
     if (meritRating === 'Needs Improvement') {
-        document.getElementById('meritMessage').textContent = 'Evaluations with an overall rating of “Needs Improvement” are not eligible for performance-based merit increase.';
         estimatedRate = newRate;
     } else if (meritRating === 'Meets Performance Objectives' || meritRating === 'Exceeds Performance Objectives') {
         const meritRate = newRate * (1 + meritPercentage / 100);
         estimatedRate = newRate > maxRate ? newRate : Math.min(meritRate, maxRate);
-        document.getElementById('meritMessage').textContent = `Evaluations with an overall rating of “${meritRating}” may earn a ${meritPercentage}% increase.`;
     } else if (meritRating === 'Demonstrates Exceptional Performance') {
         const meritRate = newRate * (1 + meritPercentage / 100);
         estimatedRate = newRate > topRate ? newRate : Math.min(meritRate, topRate);
-        document.getElementById('meritMessage').textContent = 'Evaluations with an overall rating of “Demonstrates Exceptional Performance” may earn a 9% increase.';
     }
 
     document.getElementById('newRate').textContent = newRate.toFixed(2);
