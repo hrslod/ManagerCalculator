@@ -34,7 +34,7 @@ body {
 
 .header img {
     width: auto;
-    height: 100px; /* Adjust size as needed */
+    height: 50px; /* Adjust size as needed */
     background-color: orange;
     object-fit: contain; /* Ensure it fits within the given size */
 }
@@ -80,6 +80,7 @@ input, select {
 table {
     width: 100%;
     margin-top: 10px;
+    table-layout: fixed;
     border-collapse: collapse;
 }
 
