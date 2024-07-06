@@ -82,25 +82,16 @@ function calculate() {
 
     let estimatedRate;
 
-    if (newRate > maxRate) {
-        estimatedRate = newRate;
-    } else {
-        const meritRate = newRate * (1 + meritPercentage / 100);
-        if (meritRating === 'Meets Performance Objectives' || meritRating === 'Exceeds Performance Objectives') {
-            estimatedRate = Math.min(meritRate, maxRate);
-        } else if (meritRating === 'Demonstrates Exceptional Performance') {
-            estimatedRate = Math.min(meritRate, topRate);
-        }
-    }
-
     if (meritRating === 'Needs Improvement') {
         document.getElementById('meritMessage').textContent = 'Evaluations with an overall rating of “Needs Improvement” are not eligible for performance-based merit increase.';
         estimatedRate = newRate;
-    } else if (meritRating === 'Meets Performance Objectives') {
-        document.getElementById('meritMessage').textContent = 'Evaluations with an overall rating of “Meets Performance Objectives” may earn a 3% increase.';
-    } else if (meritRating === 'Exceeds Performance Objectives') {
-        document.getElementById('meritMessage').textContent = 'Evaluations with an overall rating of “Exceeds Performance Objectives” may earn a 6% increase.';
+    } else if (meritRating === 'Meets Performance Objectives' || meritRating === 'Exceeds Performance Objectives') {
+        const meritRate = newRate * (1 + meritPercentage / 100);
+        estimatedRate = newRate > maxRate ? newRate : Math.min(meritRate, maxRate);
+        document.getElementById('meritMessage').textContent = `Evaluations with an overall rating of “${meritRating}” may earn a ${meritPercentage}% increase.`;
     } else if (meritRating === 'Demonstrates Exceptional Performance') {
+        const meritRate = newRate * (1 + meritPercentage / 100);
+        estimatedRate = newRate > topRate ? newRate : Math.min(meritRate, topRate);
         document.getElementById('meritMessage').textContent = 'Evaluations with an overall rating of “Demonstrates Exceptional Performance” may earn a 9% increase.';
     }
 
