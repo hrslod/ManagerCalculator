@@ -35,7 +35,6 @@ body {
 .header img {
     width: auto;
     height: 50px; /* Adjust size as needed */
-    background-color: orange;
     object-fit: contain; /* Ensure it fits within the given size */
 }
 
