@@ -89,7 +89,7 @@ function showConditionalMessage(message) {
     popupWindow.document.write(`
         <html>
         <head>
-            <title>Conditional Message</title>
+            <title>Merit Increase Eligibility Info</title>
             <style>
                 body {
                     font-family: Arial, sans-serif;
