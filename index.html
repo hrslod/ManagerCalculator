@@ -66,9 +66,10 @@
         <div id="results">
             <p><strong>Updated Salary Information:</strong></p>
             <div class="results-content">
-                <p>Hourly Rate after Negotiated Increase is Applied: <span id="newRate"><b>---</b></span></p>
-                <p>Merit Percentage Increase: <span id="meritIncrease"><b>---</b></span></p>
+                <p>Hourly Rate after 4.25% increase is applied: <span id="newRate"><b>---</b></span></p>
+                <p>Actual Percentage Increase: <span id="actualPercentage"><b>---</b></span></p>               
                 <p>Estimated Hourly Rate (effective 6/28/24): <span id="estimatedRate"><b>---</b></span></p>
+
             </div>
         </div>
         <div class="disclaimer">
@@ -78,6 +79,15 @@
             <img src="logo2.png" alt="Footer Logo" class="logo-footer">
         </div>
     </div>
+
+    <!-- Modal structure -->
+    <div id="meritMessageModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <div id="meritMessageContent"></div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
