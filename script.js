@@ -86,7 +86,7 @@ function updateMeritMessage(meritRating) {
 
 function showConditionalMessage(message) {
     const popupWindow = window.open('', '_blank', 'width=400,height=300');
-    popupWindow.document.write(`
+    popupWindow.document.write(
         <html>
         <head>
             <title>Merit Increase Eligibility Info</title>
@@ -118,7 +118,7 @@ function showConditionalMessage(message) {
             </div>
         </body>
         </html>
-    `);
+    );
 }
 
 function calculate() {
@@ -146,7 +146,17 @@ function calculate() {
     }
 
     let estimatedRate = currentRate * (1 + meritPercentage / 100);
-    estimatedRate = Math.min(estimatedRate, maxRate);
+    let estimatedRate;
+
+    if (meritRating === 'Needs Improvement') {
+        estimatedRate = currentRate;
+    } else if (meritRating === 'Meets Performance Objectives' || meritRating === 'Exceeds Performance Objectives') {
+        const meritRate = currentRate * (1 + meritPercentage / 100);
+        estimatedRate = currentRate * (1 + meritPercentage / 100) > maxRate ? currentRate : Math.min(meritRate, maxRate);
+    } else if (meritRating === 'Demonstrates Exceptional Performance') {
+        const meritRate = currentRate * (1 + meritPercentage / 100);
+        estimatedRate = currentRate > topRate ? currentRate : Math.min(meritRate, topRate);
+    }
     
 // Calculate actual percentage increase
 const actualPercentageIncrease = ((estimatedRate - currentRate) / currentRate) * 100;
