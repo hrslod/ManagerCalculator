@@ -148,11 +148,15 @@ function calculate() {
     let estimatedRate = currentRate * (1 + meritPercentage / 100);
     estimatedRate = Math.min(estimatedRate, maxRate);
     
-    // Calculate actual percentage increase
-    const actualPercentageIncrease = ((estimatedRate - currentRate) / currentRate) * 100;
+// Calculate actual percentage increase
+const actualPercentageIncrease = ((estimatedRate - newRate) / newRate) * 100;
 
-    document.getElementById('estimatedRate').textContent = estimatedRate.toFixed(2);
-    document.getElementById('actualPercentage').textContent = `${actualPercentageIncrease.toFixed(2)}%`;
+// Ensure that the percentage never goes below 0
+const adjustedPercentageIncrease = Math.max(actualPercentageIncrease, 0);
+
+// Update the elements with the calculated values
+document.getElementById('estimatedRate').textContent = estimatedRate.toFixed(2);
+document.getElementById('actualPercentage').textContent = `${adjustedPercentageIncrease.toFixed(2)}%`;
 
     // Show the conditional message
     let conditionalMessage = '';
