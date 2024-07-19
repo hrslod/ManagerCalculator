@@ -149,7 +149,7 @@ function calculate() {
     estimatedRate = Math.min(estimatedRate, maxRate);
     
 // Calculate actual percentage increase
-const actualPercentageIncrease = ((estimatedRate - newRate) / newRate) * 100;
+const actualPercentageIncrease = ((estimatedRate - currentRate) / currentRate) * 100;
 
 // Ensure that the percentage never goes below 0
 const adjustedPercentageIncrease = Math.max(actualPercentageIncrease, 0);
