@@ -86,7 +86,7 @@ function updateMeritMessage(meritRating) {
 
 function showConditionalMessage(message) {
     const popupWindow = window.open('', '_blank', 'width=400,height=300');
-    popupWindow.document.write(
+    popupWindow.document.write(`
         <html>
         <head>
             <title>Merit Increase Eligibility Info</title>
@@ -118,7 +118,7 @@ function showConditionalMessage(message) {
             </div>
         </body>
         </html>
-    );
+    `);
 }
 
 function calculate() {
@@ -146,27 +146,14 @@ function calculate() {
     }
 
     let estimatedRate = currentRate * (1 + meritPercentage / 100);
-    let estimatedRate;
-
-    if (meritRating === 'Needs Improvement') {
-        estimatedRate = currentRate;
-    } else if (meritRating === 'Meets Performance Objectives' || meritRating === 'Exceeds Performance Objectives') {
-        const meritRate = currentRate * (1 + meritPercentage / 100);
-        estimatedRate = currentRate * (1 + meritPercentage / 100) > maxRate ? currentRate : Math.min(meritRate, maxRate);
-    } else if (meritRating === 'Demonstrates Exceptional Performance') {
-        const meritRate = currentRate * (1 + meritPercentage / 100);
-        estimatedRate = currentRate > topRate ? currentRate : Math.min(meritRate, topRate);
-    }
+    estimatedRate = Math.min(estimatedRate, maxRate);
     
-// Calculate actual percentage increase
-const actualPercentageIncrease = ((estimatedRate - currentRate) / currentRate) * 100;
+    // Calculate actual percentage increase
+    let actualPercentageIncrease = ((estimatedRate - currentRate) / currentRate) * 100;
+    actualPercentageIncrease = Math.max(actualPercentageIncrease, 0);
 
-// Ensure that the percentage never goes below 0
-const adjustedPercentageIncrease = Math.max(actualPercentageIncrease, 0);
-
-// Update the elements with the calculated values
-document.getElementById('estimatedRate').textContent = estimatedRate.toFixed(2);
-document.getElementById('actualPercentage').textContent = `${adjustedPercentageIncrease.toFixed(2)}%`;
+    document.getElementById('estimatedRate').textContent = estimatedRate.toFixed(2);
+    document.getElementById('actualPercentage').textContent = `${actualPercentageIncrease.toFixed(2)}%`;
 
     // Show the conditional message
     let conditionalMessage = '';
