@@ -145,8 +145,17 @@ function calculate() {
             meritPercentage = 0;
     }
 
-    let estimatedRate = currentRate * (1 + meritPercentage / 100);
-    estimatedRate = Math.min(estimatedRate, maxRate);
+    let estimatedRate;
+
+    if (meritRating === 'Needs Improvement') {
+        estimatedRate = currentRate;
+    } else if (meritRating === 'Meets Performance Objectives' || meritRating === 'Exceeds Performance Objectives') {
+        const meritRate = currentRate * (1 + meritPercentage / 100);
+        estimatedRate = currentRate > maxRate ? currentRate : Math.min(meritRate, maxRate);
+    } else if (meritRating === 'Demonstrates Exceptional Performance') {
+        const meritRate = currentRate * (1 + meritPercentage / 100);
+        estimatedRate = currentRate > topRate ? currentRate : Math.min(meritRate, topRate);
+    }
     
     // Calculate actual percentage increase
     let actualPercentageIncrease = ((estimatedRate - currentRate) / currentRate) * 100;
